@@ -1,0 +1,11 @@
+stage(" build docker image"){
+          sh "docker build -t sumannaidu4/java-web-app-docker:${buildnumber} ."
+      }
+      
+      stage("docker login & Push "){
+          withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+           sh"docker login -u sumannaidu4 -p ${dockerhubpwd}"
+      }
+          
+           sh"docker push sumannaidu4/java-web-app-docker:${buildnumber}."
+      }
